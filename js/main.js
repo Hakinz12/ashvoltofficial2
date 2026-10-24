@@ -27,6 +27,61 @@
     });
   }
 
+
+/* ASHVOLT Contract Address Copy Button */
+(() => {
+    const copyButton = document.getElementById("copy-contract");
+    const status = document.getElementById("contract-copy-status");
+
+    if (!copyButton || !status) return;
+
+    copyButton.addEventListener("click", async () => {
+        const address = copyButton.dataset.address;
+        const label = copyButton.querySelector(".contract-copy__label");
+
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(address);
+            } else {
+                // Fallback for browsers that block Clipboard API
+                const textarea = document.createElement("textarea");
+                textarea.value = address;
+                textarea.setAttribute("readonly", "");
+                textarea.style.position = "fixed";
+                textarea.style.left = "-9999px";
+
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                const copied = document.execCommand("copy");
+                textarea.remove();
+
+                if (!copied) {
+                    throw new Error("Copy failed");
+                }
+            }
+
+            if (label) {
+                label.textContent = "ADDRESS COPIED!";
+            }
+
+            status.textContent =
+                "Contract address copied successfully.";
+
+            window.setTimeout(() => {
+                if (label) {
+                    label.textContent = "COPY ADDRESS";
+                }
+            }, 2000);
+
+        } catch (error) {
+            status.textContent =
+                "Copy failed. Select the address above and copy it manually.";
+        }
+    });
+})();
+
+
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
