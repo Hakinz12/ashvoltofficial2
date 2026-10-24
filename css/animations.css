@@ -1,0 +1,16 @@
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes floaty { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-10px) rotate(1deg); } }
+@keyframes orbit { from { transform: rotate(-25deg); } to { transform: rotate(335deg); } }
+@keyframes pulse { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+.hero-character { animation: floaty 6s ease-in-out infinite; }
+.art-orbit--outer { animation: orbit 48s linear infinite; }
+.art-orbit--inner { animation: orbit 58s linear infinite reverse; }
+.art-star--one, .art-star--three { animation: pulse 3s ease-in-out infinite; }
+.art-star--two { animation: pulse 4s ease-in-out infinite .8s; }
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal--delay { transition-delay: .14s; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
